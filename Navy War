@@ -1,0 +1,1133 @@
+Program Batalha_naval;
+var
+campo:array[1..10,1..10]of string;
+a,b,c,l:integer;
+posicao:string;
+ligado,teste1,teste2,teste3:boolean;
+Begin
+ {Criado por: Ewerton Jordao e Jackson Dantas trabalho interdisciplinar curso UMC TADS Orientador Fernando Teixeira}
+ {Legenda do navios utilizados}       {Atalho ctrl+I .inserindo o destroyer linha 107,inserindo o porta avioes 330,  }
+ repeat 
+ ligado:=false;
+ teste1:=false;
+ teste2:=false;
+ gotoxy (20,1);writeln('S = Submarino');
+ gotoxy (20,2);writeln('D = Destroyer');
+ gotoxy (20,3);writeln('P = Porta-aviões');
+ gotoxy (20,4);writeln('N = Submarino Nuclear');
+ 
+ {Mostrando o campo da batalha}
+ 
+ 	for a:= 1 to 10 do
+	 begin 
+ 		gotoxy (a+2,1); writeln(a);
+ 		gotoxy (1,a+1); writeln(a);
+ 		end;
+ 	for a:= 2 to 11 do
+ 		for b:=3 to 12 do
+ 		begin
+ 			textbackground(blue) ;textcolor (lightblue);
+			 gotoxy (b,a); writeln(#219);
+ 		end;
+ 			 textbackground(black); textcolor(lightgreen);
+ {inserindo o submarino}		
+ 		
+      gotoxy (1,14); writeln ('guardar submarino - indique coluna e linha: ');
+      gotoxy (45,14);read(c);
+      gotoxy (48,14);read(l);
+      gotoxy (1,15); writeln ('Horizontal ou Vertical - H/V? ');
+      gotoxy (30,15);read(posicao);
+
+	   if (c<1) or (c>10) or (l<1) or (l>10) then
+	   	begin
+	   	gotoxy(1,17);writeln('posição invalida os valores devem ser maiores que 1 e menores ou iguais a 10');
+	   	delay(2000);
+	   	gotoxy(1,17);writeln('                                                                            ');
+	   	teste1:=false;
+	   	end
+	   		else
+	   			begin
+	   			teste1:=true;	  
+	   			end ;
+	   
+	   	   
+           if(posicao='h') or (posicao='H') or  (posicao='V') or (posicao='v') then
+	      begin
+	   	 teste2:=true;	  
+	   	 end
+	   		else  
+	   			begin
+	   			gotoxy(1,18);writeln('opção invalida,posição deve ser Horizontal="h" ou Vertical="v"  ');
+	   			teste2:=false;
+	   			delay(2000);
+	   			gotoxy(1,18);writeln('                                                                ');
+	   			end;
+		   
+ 	if (teste1=true) and (teste2=true) then
+ 	begin
+ 	ligado:=true;
+ 	end;
+      
+       
+       
+ until (ligado=true);    
+          
+        	if (posicao = 'H')and(c=10)or (posicao = 'h')and(c=10) then	
+		begin 
+		campo[c,l]:= 'S';
+      	campo[c-1,l]:='S';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+1,l+1); writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l]);		 
+		textbackground(black); textcolor(lightgreen);  
+		end	
+		Else
+		if (posicao = 'H') or (posicao = 'h') then
+      	begin
+      	campo[c,l]:= 'S';
+      	campo[c+1,l]:='S';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c+1,l]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+      	else
+      	if (posicao = 'V') and (l=10)or(posicao = 'v')and (l=10)  then
+		begin 
+		campo[c,l]:='S';
+      	campo[c,l-2]:='S';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1); writeln(campo[c,l]);
+      	gotoxy (c+2,l);writeln(campo[c,l]);
+		textbackground(black); textcolor(lightgreen);
+		end	
+		else 
+		begin
+      	campo[c,l]:='S';
+      	campo[c,l+1]:='S';
+      	textbackground(lightblue) ;textcolor (lightred) ;
+	     gotoxy (c+2,l+1); writeln(campo[c,l]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+1]);
+      	textbackground(black); textcolor(lightgreen);
+          end;
+
+
+{inserindo o destroyer } //mesmo laço de repetiçao porem com a restriçao de não poder colocar em cima de outros navios//
+repeat   
+ligado:=false;
+teste1:=false;
+teste2:=false;
+ gotoxy (1,14); writeln ('guardar destroyer - indique coluna e linha:       ');
+ gotoxy (45,14);read(c);
+ gotoxy (47,14);read(l);
+ gotoxy (1,15); writeln ('Horizontal ou Vertical - H/V?     ');
+ gotoxy (30,15);read(posicao);
+      
+	 
+	 			if (c<1) or (c>10) or (l<1) or (l>10) then
+	   				begin
+	   				gotoxy(1,17);writeln('posição invalida os valores devem ser maiores que 1 e menores ou iguais a 10');
+	   				delay(2000);
+	   			     gotoxy(1,17);writeln('                                                                            ');
+	   				teste1:=false;
+	   				end
+	   				   else
+	   					  begin
+	  					  teste1:=true;	  
+	   					  end ;
+	 
+	  		   if(posicao='h') or (posicao='H') or  (posicao='V') or (posicao='v') then
+	   				begin
+	   				teste2:=true;	  
+	   				end
+	   				 else  
+	   					begin
+	   					gotoxy(1,18);writeln('opção invalida,posição deve ser Horizontal="h" ou Vertical="v"  ');
+	   					teste2:=false;
+	   					delay(2000);
+	   					gotoxy(1,18);writeln('                                                                ');
+	   					end;
+		   
+      if (teste1=true)and (posicao='h') or (posicao='H')   then         {Teste para verificar se as proximas posiçoes n contem outro navio}
+	 begin 
+	   
+	   		if (c=1) or (c<=6) then
+	   		begin
+	    									if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c+2,l]='S')    then
+	    									begin
+         									gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+         									teste3:=false;
+	    									delay(2000);
+         									gotoxy(1,19);writeln('                                                                ');
+         									end
+	    										else
+	    											begin
+	    											teste3:=true;	  
+	    											end;
+	    	   
+	   
+	   		end 
+	   	 else
+	   		if (c=7) or (c=8) then
+	  		 begin
+	   									if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c+2,l]='S') then
+        									begin
+        									gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        									teste3:=false;
+	   									delay(2000);
+        									gotoxy(1,19);writeln('                                                                ');
+        									end
+	   										else
+	   											begin
+	   											teste3:=true;	  
+	   											end;
+	   		end
+	   	else
+	   		if(c=9) then
+	   		begin
+	   									if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c-1,l]='S')   then
+        									begin
+        									gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        									teste3:=false;
+	   									delay(2000);
+        									gotoxy(1,19);writeln('                                                                ');
+        									end
+	   										else
+	   											begin
+	   											teste3:=true;	  
+	   											end;
+	   		end
+	  	else
+	   		if(c=10) then
+	   		begin
+	   									if (campo[c,l]='S') or (campo[c-1,l]='S')or (campo[c-2,l]='S')    then
+        									begin
+        									gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        									teste3:=false;
+	   									delay(2000);
+        									gotoxy(1,19);writeln('                                                                ');
+        									end
+	   										else
+	   											begin
+	   											teste3:=true;	  
+	   											end;   
+	   	   
+	   
+	   
+	   		end;
+	  	 
+	 end  
+	 else
+	 if (teste1=true) and (posicao='V') or (posicao='v')  then
+	 begin 
+	   if (l=1) or (l<=6) then
+	   begin
+	    if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S')    then
+	    begin
+         	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+         	teste3:=false;
+	    	delay(2000);
+         	gotoxy(1,19);writeln('                                                                ');
+         end
+	    else
+	    begin
+	    teste3:=true;	  
+	    end;
+	   end
+	   else
+	   if (l=7) or (l=8) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if(l=9) then
+	   begin
+	   if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l-1]='S')  then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if(l=10) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c,l-1]='S')or (campo[c,l-2]='S')    then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;   
+	   	   
+	   
+	   
+	   end;
+	  
+	  	 
+	 end;
+	   
+	 
+	   
+	   if (teste1=true) and (teste2=true) and (teste3=true) then
+        begin
+        ligado:=true;
+        end;
+	 
+	 
+until (ligado=true); 	 
+	     if (posicao = 'H')and(c=10)  or (posicao = 'h')and(c=10) then	
+		begin
+		campo[c,l]:= 'D';
+      	campo[c-1,l]:='D';
+      	campo[c-2,l]:='D';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+1,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c-1,l]);
+      	gotoxy (c,l+1);writeln(campo[c-2,l]);
+		textbackground(black); textcolor(lightgreen);
+		end			
+		else		
+		if (posicao = 'H')and(c=9)  or (posicao = 'h')and(c=9)   then
+		begin
+		campo[c,l]:= 'D';
+      	campo[c-1,l]:='D';
+      	campo[c+1,l]:='D';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+1,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c-1,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c+1,l]);	
+		textbackground(black); textcolor(lightgreen);
+		end
+		else 		
+		if (posicao = 'H') or (posicao = 'h') then
+      	begin
+      	campo[c,l]:= 'D';
+      	campo[c+1,l]:='D';
+      	campo[c+2,l]:='D';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c+1,l]);
+      	gotoxy (c+4,l+1);writeln(campo[c+2,l]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+      	else
+      	if (posicao= 'V') and(l=10) or (posicao='v') and (l=10) then
+		begin 
+		campo[c,l]:= 'D';
+      	campo[c,l-1]:='D';
+      	campo[c,l-3]:='D';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l-1);writeln(campo[c,l]);
+      	gotoxy (c+2,l);writeln(campo[c,l]); 
+		textbackground(black); textcolor(lightgreen);
+		end 
+		else 
+		if  (posicao= 'V') and (l=9) or  (posicao='v') and (l=9) then
+		begin 
+		campo[c,l]:= 'D';
+      	campo[c,l-1]:='D';
+      	campo[c,l+1]:='D';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l);writeln(campo[c,l]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l]); 
+		textbackground(black); textcolor(lightgreen);
+		end 
+		else 		
+		begin
+      	campo[c,l]:='D';
+      	campo[c,l+1]:='D';
+      	campo[c,l+2]:='D';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+3);writeln(campo[c,l+2]);
+      	textbackground(black); textcolor(lightgreen);		
+		end;
+	
+	
+ {inserindo o Porta-aviões}	
+	
+repeat	
+ligado:=false;
+teste1:=false;
+teste2:=false;
+teste3:=false;
+     	
+     gotoxy (1,14); writeln ('guardar Porta-aviões - indique coluna e linha:       ');
+     gotoxy (48,14);read(c);
+     gotoxy (50,14);read(l);
+     gotoxy (1,15); writeln ('Horizontal ou Vertical - H/V?     ');
+     gotoxy (30,15);read(posicao);
+     	
+	 if (c<1) or (c>10) or (l<1) or (l>10) then
+	   begin
+	   gotoxy(1,17);writeln('posição invalida os valores devem ser maiores que 1 e menores ou iguais a 10');
+	   delay(2000);
+	   gotoxy(1,17);writeln('                                                                            ');
+	   teste1:=false;
+	   end
+	   else
+	   begin
+	   teste1:=true;	  
+	   end ;
+	 
+	  if(posicao='h') or (posicao='H') or  (posicao='V') or (posicao='v') then
+	   begin
+	   teste2:=true;	  
+	   end
+	   else  
+	   begin
+	   gotoxy(1,18);writeln('opção invalida,posição deve ser Horizontal="h" ou Vertical="v"  ');
+	   teste2:=false;
+	   delay(2000);
+	   gotoxy(1,18);writeln('                                                                ');
+	   end;
+	
+	
+	   if (teste1=true)and (posicao='h') or (posicao='H')   then         {Teste para verificar se as proximas posiçoes n contem outro navio}
+	 begin 
+	   
+	   if (c=1) or (c<=6) then
+	   begin
+	    if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c+2,l]='S')or (campo[c+3,l]='S') or (campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c+2,l]='D') or  (campo[c+3,l]='D')   then
+	    begin
+         gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+         teste3:=false;
+	    delay(2000);
+         gotoxy(1,19);writeln('                                                                ');
+         end
+	    else
+	    begin
+	    teste3:=true;	  
+	    end;
+	    	   
+	   
+	   end 
+	   else
+	   if (c=7)  then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c+2,l]='S') or (campo[c+3,l]='S')  or (campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c+2,l]='D') or(campo[c+3,l]='D') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if (c=8)  then
+	    begin
+	   	if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c+2,l]='S') or (campo[c-1,l]='S')  or (campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c+2,l]='D') or(campo[c-1,l]='D') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else	   
+	   if(c=9) then
+	   begin
+	   if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c-2,l]='S') or (campo[c-3,l]='S') or (campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c-2,l]='D') or (campo[c-3,l]='D')    then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if(c=10) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c-1,l]='S')or (campo[c-2,l]='S') or (campo[c-3,l]='S') or  (campo[c,l]='D') or (campo[c-1,l]='D')or (campo[c-2,l]='D') or (campo[c-3,l]='D')   then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;   
+	   	   
+	   
+	   
+	   end;
+	  	 
+	 end  
+	 else
+	 if (teste1=true) and (posicao='V') or (posicao='v')  then
+	 begin 
+	   if (l=1) or (l<=6) then
+	   begin
+	    if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S') or (campo[c,l+3]='S') or (campo[c,l]='D') or (campo[c,l+1]='D')or (campo[c,l+2]='D') or (campo[c,l+3]='D')   then
+	    begin
+         	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+         	teste3:=false;
+	    	delay(2000);
+         	gotoxy(1,19);writeln('                                                                ');
+         end
+	    else
+	    begin
+	    teste3:=true;	  
+	    end;
+	   end
+	   else
+	   if (l=7) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S')or (campo[c,l+3]='S')or (campo[c,l]='D') or (campo[c,l+1]='D')or (campo[c,l+2]='D')or (campo[c,l+3]='D')   then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	    if (l=8)  then
+	    begin
+	   	if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S') or (campo[c,l-1]='S')  or (campo[c,l]='D') or (campo[c,l+1]='D')or (campo[c,l+2]='D') or(campo[c,l-1]='D') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else 	   
+	   if(l=9) then
+	   begin
+	   if (campo[c,l]='S') or (campo[c,l+1]='S')or(campo[c,l-1]='S') or (campo[c,l-2]='S') or(campo[c,l]='D') or (campo[c,l+1]='D')or(campo[c,l-1]='D') or(campo[c,l-2]='D') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if(l=10) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c,l-1]='S')or (campo[c,l-2]='S') or (campo[c,l-3]='S')or (campo[c,l]='D') or (campo[c,l-1]='D')or (campo[c,l-2]='D') or (campo[c,l-3]='D')   then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;   
+	   end;
+	  
+	  	 
+	 end;
+	   
+	 
+	   
+	   if (teste1=true) and (teste2=true) and (teste3=true) then
+        begin
+        ligado:=true;
+        end;		
+		
+		
+		
+		
+until (ligado=true);		
+		if (posicao = 'H')and (c=10) or (posicao = 'h') and (c=10) then
+		begin
+		campo[c,l]:= 'P';
+      	campo[c-1,l]:='P';
+      	campo[c-2,l]:='P';
+      	campo[c-3,l]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c,l+1);writeln(campo[c,l]);
+      	gotoxy (c+1,l+1);writeln(campo[c,l]);
+      	gotoxy (c-1,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l]);
+		textbackground(black); textcolor(lightgreen);
+		end
+		else
+		if  (posicao = 'H')and (c=9) or (posicao = 'h') and (c=9) then
+		begin
+		campo[c,l]:= 'P';
+      	campo[c+1,l]:='P';
+      	campo[c-2,l]:='P';
+      	campo[c-3,l]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c,l+1);writeln(campo[c,l]);
+      	gotoxy (c+1,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c,l]);		
+		textbackground(black); textcolor(lightgreen);
+		end
+		else
+		if  (posicao = 'H')and (c=8) or (posicao = 'h') and (c=8) then
+		begin
+		campo[c,l]:= 'P';
+      	campo[c-1,l]:='P';
+      	campo[c+2,l]:='P';
+      	campo[c-3,l]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+1,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c,l]);
+      	gotoxy (c+4,l+1);writeln(campo[c,l]);		
+		textbackground(black); textcolor(lightgreen);
+		end
+		else		
+		if (posicao = 'H') or (posicao = 'h') then
+      	begin
+      	campo[c,l]:= 'P';
+      	campo[c+1,l]:='P';
+      	campo[c+2,l]:='P';
+      	campo[c+3,l]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c+1,l]);
+      	gotoxy (c+4,l+1);writeln(campo[c+2,l]);
+      	gotoxy (c+5,l+1);writeln(campo[c+3,l]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+      	else
+      	if (posicao = 'V') and (l=10) or (posicao = 'v')and (l=10)  then
+		begin
+		campo[c,l]:='P';
+      	campo[c,l-1]:='P';
+      	campo[c,l-2]:='P';
+      	campo[c,l-3]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l-2);writeln(campo[c,l-1]);
+      	gotoxy (c+2,l);writeln(campo[c,l-2]);
+      	gotoxy (c+2,l-1);writeln(campo[c,l-3]);
+      	textbackground(black); textcolor(lightgreen);
+		end		 	
+		else 
+		if (posicao = 'V') and (l=9) or (posicao = 'v')and (l=9)  then
+		begin
+		campo[c,l+1]:='P';
+      	campo[c,l+1]:='P';
+      	campo[c,l-2]:='P';
+      	campo[c,l-1]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l-1);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l-2]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l-1]);
+      	textbackground(black); textcolor(lightgreen);
+		end		 	 	
+		else
+		if (posicao = 'V') and (l=9) or (posicao = 'v')and (l=9)  then
+		begin
+		campo[c,l+1]:='P';
+      	campo[c,l+1]:='P';
+      	campo[c,l-2]:='P';
+      	campo[c,l-1]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l-1);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l-2]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l-1]);
+      	textbackground(black); textcolor(lightgreen);
+		end		 	 		
+		else
+		if (posicao = 'V') and (l=9) or (posicao = 'v')and (l=9)  then
+		begin
+		campo[c,l+1]:='P';
+      	campo[c,l+1]:='P';
+      	campo[c,l-2]:='P';
+      	campo[c,l-1]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l-1);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l-2]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l-1]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+		else 
+	     if (posicao = 'V') and (l=8) or (posicao = 'v')and (l=8)  then
+		begin
+		campo[c,l+1]:='P';
+      	campo[c,l]:='P';
+      	campo[c,l+2]:='P';
+      	campo[c,l+1]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+2]);
+      	gotoxy (c+2,l+3);writeln(campo[c,l+2]);
+      	gotoxy (c+2,l);writeln(campo[c,l]);
+		textbackground(black); textcolor(lightgreen);
+		end
+		else
+		begin
+      	campo[c,l]:='P';
+      	campo[c,l+1]:='P';
+      	campo[c,l+2]:='P';
+      	campo[c,l+3]:='P';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+3);writeln(campo[c,l+2]);
+      	gotoxy (c+2,l+4);writeln(campo[c,l+3]);
+      	textbackground(black); textcolor(lightgreen);
+		end;                                                            {ok}
+     {inserindo o submarino nuclear}
+ 
+repeat 
+ligado:=false;
+teste1:=false;
+teste2:=false;
+teste3:=false;
+ 
+ 	gotoxy (1,14); writeln ('guardar submarino nuclear - indique coluna e linha:       ');
+     gotoxy (53,14);read(c);
+     gotoxy (55,14);read(l);
+     gotoxy (1,15); writeln ('Horizontal ou Vertical - H/V?     ');
+     gotoxy (30,15);read(posicao);
+      
+	 
+	 if (c<1) or (c>10) or (l<1) or (l>10) then
+	   begin
+	   gotoxy(1,17);writeln('posição invalida os valores devem ser maiores que 1 e menores ou iguais a 10');
+	   delay(2000);
+	   gotoxy(1,17);writeln('                                                                            ');
+	   teste1:=false;
+	   end
+	   else
+	   begin
+	   teste1:=true;	  
+	   end ;
+	 
+	  if(posicao='h') or (posicao='H') or  (posicao='V') or (posicao='v') then
+	   begin
+	   teste2:=true;	  
+	   end
+	   else  
+	   begin
+	   gotoxy(1,18);writeln('opção invalida,posição deve ser Horizontal="h" ou Vertical="v"  ');
+	   teste2:=false;
+	   delay(2000);
+	   gotoxy(1,18);writeln('                                                                ');
+	   end;
+	
+	
+	   if (teste1=true)and (posicao='h') or (posicao='H')   then         {Teste para verificar se as proximas posiçoes n contem outro navio}
+	 begin 
+	   
+	   if (c=1) or (c<=6) then
+	   begin
+	    if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c+2,l]='S')  or (campo[c+3,l]='S') or(campo[c+4,l]='S')or(campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c+2,l]='D') or  (campo[c+3,l]='D') or (campo[c+4,l]='D')or (campo[c,l]='P') or (campo[c+1,l]='P')or (campo[c+2,l]='P') or  (campo[c+3,l]='P') or (campo[c+4,l]='P')  then
+	    begin
+         gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+         teste3:=false;
+	    delay(2000);
+         gotoxy(1,19);writeln('                                                                ');
+         end
+	    else
+	    begin
+	    teste3:=true;	  
+	    end;
+	    	   
+	   
+	   end 
+	   else
+	   if (c=7)  then
+	   begin
+	   	if (campo[c,l]='S' ) or (campo[c+1,l]='S')or (campo[c+2,l]='S') or (campo[c+3,l]='S')or(campo[c-1,l]='S')or (campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c+2,l]='D') or(campo[c+3,l]='D')or(campo[c-1,l]='D')or (campo[c,l]='P') or (campo[c+1,l]='P')or (campo[c+2,l]='P') or  (campo[c+3,l]='P') or (campo[c-1,l]='P')   then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if (c=8)  then
+	    begin
+	   	if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c+2,l]='S') or (campo[c-1,l]='S') or(campo[c-2,l]='S')  or (campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c+2,l]='D') or(campo[c-1,l]='D')or (campo[c-2,l]='D')or (campo[c,l]='P') or (campo[c+1,l]='P')or (campo[c+2,l]='P') or(campo[c-1,l]='P')or (campo[c-2,l]='P') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else	   
+	   if(c=9) then
+	   begin
+	   if (campo[c,l]='S') or (campo[c+1,l]='S')or (campo[c-2,l]='S') or (campo[c-3,l]='S') or (campo[c-4,l]='S') or (campo[c,l]='D') or (campo[c+1,l]='D')or (campo[c-2,l]='D') or (campo[c-3,l]='D')or (campo[c-4,l]='D')or(campo[c,l]='P') or (campo[c+1,l]='P')or (campo[c-2,l]='P') or (campo[c-3,l]='P')or (campo[c-4,l]='P')    then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if(c=10) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c-1,l]='S')or (campo[c-2,l]='S') or (campo[c-3,l]='S') or (campo[c-4,l]='S') or  (campo[c,l]='D') or (campo[c-1,l]='D')or (campo[c-2,l]='D') or (campo[c-3,l]='D')or (campo[c-4,l]='D')or  (campo[c,l]='P') or (campo[c-1,l]='P')or (campo[c-2,l]='P') or (campo[c-3,l]='P')or (campo[c-4,l]='P')   then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;   
+	   	   
+	   
+	   
+	   end;
+	  	 
+	 end  
+	 else
+	 if (teste1=true) and (posicao='V') or (posicao='v')  then
+	 begin 
+	   if (l=1) or (l<=6) then
+	   begin
+	    if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S') or (campo[c,l+3]='S') or(campo[c,l+4]='S')  or (campo[c,l]='D') or (campo[c,l+1]='D')or (campo[c,l+2]='D') or (campo[c,l+3]='D') or (campo[c,l+4]='D') or (campo[c,l]='P') or (campo[c,l+1]='P')or (campo[c,l+2]='P') or (campo[c,l+3]='P') or (campo[c,l+4]='P')  then
+	    begin
+         	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+         	teste3:=false;
+	    	delay(2000);
+         	gotoxy(1,19);writeln('                                                                ');
+         end
+	    else
+	    begin
+	    teste3:=true;	  
+	    end;
+	   end
+	   else
+	   if (l=7) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S')or (campo[c,l+3]='S')or(campo[c,l-1]='S')  or (campo[c,l]='D') or (campo[c,l+1]='D')or (campo[c,l+2]='D')or (campo[c,l+3]='D')or (campo[c,l-1]='D')or (campo[c,l]='P') or (campo[c,l+1]='P')or (campo[c,l+2]='P')or (campo[c,l+3]='P')or (campo[c,l-1]='P')  then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	    if (l=8)  then
+	    begin
+	   	if (campo[c,l]='S') or (campo[c,l+1]='S')or (campo[c,l+2]='S') or (campo[c,l-1]='S')or (campo[c,l-2]='S')  or (campo[c,l]='D') or (campo[c,l+1]='D')or (campo[c,l+2]='D') or(campo[c,l-1]='D')or(campo[c,l-2]='D')or(campo[c,l]='P') or (campo[c,l+1]='P')or (campo[c,l+2]='P') or(campo[c,l-1]='P')or(campo[c,l-2]='P') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else 	   
+	   if(l=9) then
+	   begin
+	   if (campo[c,l]='S') or (campo[c,l+1]='S')or(campo[c,l-1]='S') or (campo[c,l-2]='S')or(campo[c,l-3]='S')   or(campo[c,l]='D') or (campo[c,l+1]='D')or(campo[c,l-1]='D') or(campo[c,l-2]='D')or(campo[c,l-3]='D')or(campo[c,l]='P') or (campo[c,l+1]='P')or(campo[c,l-1]='P') or(campo[c,l-2]='P')or(campo[c,l-3]='P') then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;
+	   end
+	   else
+	   if(l=10) then
+	   begin
+	   	if (campo[c,l]='S') or (campo[c,l-1]='S')or (campo[c,l-2]='S') or (campo[c,l-3]='S')or (campo[c,l-4]='S') or (campo[c,l]='D') or (campo[c,l-1]='D')or (campo[c,l-2]='D') or (campo[c,l-3]='D')or(campo[c,l-4]='D')or(campo[c,l]='P') or (campo[c,l-1]='P')or (campo[c,l-2]='P') or (campo[c,l-3]='P')or(campo[c,l-4]='P')   then
+        	begin
+        	gotoxy(1,19);writeln('posiçao ocupada escolha outra coordenada');
+        	teste3:=false;
+	   	delay(2000);
+        	gotoxy(1,19);writeln('                                                                ');
+        	end
+	   else
+	   	begin
+	   	teste3:=true;	  
+	   	end;   
+	   end;
+	  
+	  	 
+	 end;
+	   
+	 
+	   
+	   if (teste1=true) and (teste2=true) and (teste3=true) then
+        begin
+        ligado:=true;
+        end;		
+			
+		
+until (ligado=true);			
+			
+		if (posicao = 'H')and(c=10) or (posicao = 'h')and(c=10) then
+          begin
+		campo[c,l]:= 'N';
+      	campo[c-1,l]:='N';
+      	campo[c-2,l]:='N';
+      	campo[c-3,l]:='N';
+      	campo[c-4,l]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		 gotoxy (c,l+1); writeln(campo[c,l]);
+      	gotoxy (c-1,l+1);writeln(campo[c-1,l]);
+      	gotoxy (c-2,l+1);writeln(campo[c-2,l]);
+      	gotoxy (c+1,l+1);writeln(campo[c-3,l]);
+          gotoxy (c+2,l+1);writeln(campo[c-4,l]);
+          textbackground(black); textcolor(lightgreen);
+      	end
+		else
+		if (posicao = 'H')and(c=9) or (posicao = 'h')and(c=9) then
+		begin
+		campo[c,l]:= 'N';
+      	campo[c-1,l]:='N';
+      	campo[c-2,l]:='N';
+      	campo[c-3,l]:='N';
+      	campo[c-4,l]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		 gotoxy (c,l+1);writeln(campo[c,l]);
+      	gotoxy (c-1,l+1);writeln(campo[c-1,l]);
+      	gotoxy (c-2,l+1);writeln(campo[c-2,l]);
+      	gotoxy (c+1,l+1);writeln(campo[c-3,l]);
+          gotoxy (c+2,l+1);writeln(campo[c-4,l]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+		else
+		if (posicao = 'H')and(c=8) or (posicao = 'h')and(c=8) then
+		begin
+		campo[c,l]:= 'N';
+      	campo[c-1,l]:='N';
+      	campo[c-2,l]:='N';
+      	campo[c-3,l]:='N';
+      	campo[c-4,l]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		 gotoxy (c,l+1);writeln(campo[c,l]);
+      	gotoxy (c+1,l+1);writeln(campo[c-1,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c-2,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c-3,l]);
+          gotoxy (c+4,l+1);writeln(campo[c-4,l]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+		else
+		if (posicao = 'H')and(c=7) or (posicao = 'h')and(c=7) then
+		begin
+		campo[c,l]:= 'N';
+      	campo[c-1,l]:='N';
+      	campo[c-2,l]:='N';
+      	campo[c-3,l]:='N';
+      	campo[c-4,l]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+1,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c-1,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c-2,l]);
+      	gotoxy (c+4,l+1);writeln(campo[c-3,l]);
+          gotoxy (c+5,l+1);writeln(campo[c-4,l]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+		else
+		
+		if (posicao = 'H') or (posicao = 'h') then
+      	begin
+      	campo[c,l]:= 'N';
+      	campo[c+1,l]:='N';
+      	campo[c+2,l]:='N';
+      	campo[c+3,l]:='N';
+      	campo[c+4,l]:='N';
+          textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+3,l+1);writeln(campo[c+1,l]);
+      	gotoxy (c+4,l+1);writeln(campo[c+2,l]);
+      	gotoxy (c+5,l+1);writeln(campo[c+3,l]);
+          gotoxy (c+6,l+1);writeln(campo[c+4,l]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+      	else
+          if (posicao = 'V')and(l=10) or (posicao = 'v')and (l=10) then
+		begin
+      	campo[c,l]:='N';
+      	campo[c,l-1]:='N';
+      	campo[c,l-2]:='N';
+      	campo[c,l-3]:='N';
+      	campo[c,l-4]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l);writeln(campo[c,l]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l-1]);
+      	gotoxy (c+2,l-3);writeln(campo[c,l-2]);
+      	gotoxy (c+2,l-1);writeln(campo[c,l-3]);
+      	gotoxy (c+2,l-2);writeln(campo[c,l-4]);
+      	textbackground(black); textcolor(lightgreen);
+		end
+		else 
+      	if (posicao = 'V')and(l=9) or (posicao = 'v')and (l=9) then
+		begin
+      	campo[c,l]:='N';
+      	campo[c,l+1]:='N';
+      	campo[c,l-2]:='N';
+      	campo[c,l-3]:='N';
+      	campo[c,l-4]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l);writeln(campo[c,l]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+1);writeln(campo[c,l-2]);
+      	gotoxy (c+2,l-2);writeln(campo[c,l-3]);
+      	gotoxy (c+2,l-1);writeln(campo[c,l-4]);
+      	textbackground(black); textcolor(lightgreen);
+		end	 
+		else
+		if (posicao = 'V')and(l=8) or (posicao = 'v')and (l=8) then
+		begin
+      	campo[c,l]:='N';
+      	campo[c,l+1]:='N';
+      	campo[c,l+2]:='N';
+      	campo[c,l+2]:='N';
+      	campo[c,l-4]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+3);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+2]);
+      	gotoxy (c+2,l);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l-1);writeln(campo[c,l-4]);
+      	textbackground(black); textcolor(lightgreen);
+		end	 
+		else
+		if (posicao = 'V')and(l=7) or (posicao = 'v')and (l=7) then
+		begin
+      	campo[c,l]:='N';
+      	campo[c,l+1]:='N';
+      	campo[c,l+2]:='N';
+      	campo[c,l+2]:='N';
+      	campo[c,l-4]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		 gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+3);writeln(campo[c,l+2]);
+      	gotoxy (c+2,l);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+4);writeln(campo[c,l-4]);
+      	textbackground(black); textcolor(lightgreen);
+		end	 
+		else		
+		if (posicao = 'V') or (posicao = 'v') then
+		begin
+      	campo[c,l]:='N';
+      	campo[c,l+1]:='N';
+      	campo[c,l+2]:='N';
+      	campo[c,l+3]:='N';
+      	campo[c,l+4]:='N';
+      	textbackground(lightblue) ;textcolor (lightred);
+		gotoxy (c+2,l+1);writeln(campo[c,l]);
+      	gotoxy (c+2,l+2);writeln(campo[c,l+1]);
+      	gotoxy (c+2,l+3);writeln(campo[c,l+2]);
+      	gotoxy (c+2,l+4);writeln(campo[c,l+3]);
+      	gotoxy (c+2,l+5);writeln(campo[c,l+4]);
+      	textbackground(black); textcolor(lightgreen);
+		end; 	
+      	
+ 
+ 
+ {mostrando a legenda e o campo do jogo novamente após excluir a tela para esconder os navios}
+ 
+ gotoxy (1,17);writeln('Aperte uma tecla para esconder os navios');
+ readkey;
+ clrscr;
+ writeln('Proximo jogador');
+ Delay(1000); 
+ clrscr;
+ gotoxy (20,1);writeln('S = Submarino');
+ gotoxy (20,2);writeln('D = Destroyer');
+ gotoxy (20,3);writeln('P = Porta-aviões');
+ gotoxy (20,4);writeln('N = Submarino Nuclear'); 
+ 	for a:= 1 to 10 do
+	 begin 
+ 		gotoxy (a+2,1); writeln(a);
+ 		gotoxy (1,a+1); writeln(a);
+ 		end;
+ 	for a:= 2 to 11 do
+ 		for b:=3 to 12 do
+ 		begin
+               textbackground(blue) ;textcolor (lightblue);
+			gotoxy (b,a); writeln(#219);
+ 		end;
+       	textbackground(black); textcolor(lightgreen);
+      	
+      	
+      	
+      	
+      	
+ 
+	
+	 	
+end.     
